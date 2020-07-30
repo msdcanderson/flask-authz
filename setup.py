@@ -52,11 +52,11 @@ setup(
         "abac",
         "access control",
         "authorization",
-        "permission"
+        "permission",
     ],
     packages=find_packages(exclude=["docs", "tests*"]),
     data_files=[desc_file],
     include_package_data=True,
     install_requires=install_requires,
-    dependency_links=dependency_links
+    dependency_links=dependency_links,
 )
