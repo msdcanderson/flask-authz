@@ -1,4 +1,7 @@
+import os
+
 from base64 import b64decode
+import jwt
 
 
 class UnSupportedAuthType(Exception):
@@ -35,6 +38,10 @@ def authorization_decoder(auth_str: str):
         """Basic format <user>:<password> return only the user"""
         return b64decode(token).decode().split(":")[0]
     elif type == "Bearer":
-        raise UnSupportedAuthType("Bearer is not implemented yet")
+        """Bearer format, returns the identity"""
+        decoded_jwt = jwt.decode(
+            token, os.environ["JWT_SECRET_KEY"], algorithms=["HS256"]
+        )
+        return str(decoded_jwt["identity"])
     else:
         raise UnSupportedAuthType("%s Authorization is not supported" % type)
